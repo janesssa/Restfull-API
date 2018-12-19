@@ -1,10 +1,14 @@
 var should = require('should'),
     sinon = require('sinon');
 
-describe('Book Controller Tests', function () {
+describe('Movie Controller Tests', function () {
     describer('Post', function () {
         it('should not allow an empty title on post', function () {
-            var Book = function (book) { this.save = function () { } }
+            var Movie = function (
+
+
+
+            ) { this.save = function () { } }
 
             var req = {
                 body: {
@@ -17,9 +21,9 @@ describe('Book Controller Tests', function () {
                 send: sinon.spy()
             }
 
-            var bookController = require('../controllers/bookController')(Book);
+            var movieController = require('../controllers/movieController')(Movie);
 
-            bookController.post(req.res);
+            movieController.post(req.res);
 
             res.status.calledWith(400).should.equal(true, 'Bas Status ' + res.status.args[0][0]);
             res.send.calledWith('Title is required').should.equal(true);

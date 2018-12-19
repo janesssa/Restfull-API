@@ -1,4 +1,4 @@
 {
-  "uri": "http://145.24.222.197:8000/api/books",
+  "uri": "http://145.24.222.197:8000/api/movies",
   "uitleg": "Dit is mijn API voor programmeren 6"
 }

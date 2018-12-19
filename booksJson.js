@@ -1,4 +1,4 @@
-db.books.insert([
+db.movies.insert([
 {
 	title: 'War and Peace',
 	genre: 'Historical Fiction',

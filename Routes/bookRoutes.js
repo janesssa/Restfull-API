@@ -1,39 +1,39 @@
 let express = require('express');
 
-let routes = function (Book) {
-    let bookRouter = express.Router();
+let routes = function (Movie) {
+    let movieRouter = express.Router();
 
-    var bookController = require('../controllers/bookController')(Book);
-    bookRouter.route('/')
-        .post(bookController.post)
-        .get(bookController.get);
+    var movieController = require('../controllers/movieController')(Movie);
+    movieRouter.route('/')
+        .post(movieController.post)
+        .get(movieController.get);
 
-    bookRouter.use('/:bookID', function (req, res, next) {
-        Book.findById(req.params.bookID, function (err, book) {
+    movieRouter.use('/:movieID', function (req, res, next) {
+        Movie.findById(req.params.movieID, function (err, movie) {
             if (err) {
                 res.status(500).send(err);
-            } else if (book) {
-                req.book = book;
+            } else if (movie) {
+                req.movie = movie;
                 next();
             } else {
-                res.status(404).send('no book found');
+                res.status(404).send('no movie found');
             }
             });
         });
-    bookRouter.route('/:bookID')
+    movieRouter.route('/:movieID')
         .get(function (req, res) {
-            res.json(req.book);
+            res.json(req.movie);
         })
         .put(function (req, res) {
-            req.book.title = req.body.title;
-            req.book.genre = req.body.genre;
-            req.book.author = req.body.author;
-            req.book.read = req.body.read;
-            req.book.save(function (err) {
+            req.movie.title = req.body.title;
+            req.movie.genre = req.body.genre;
+            req.movie.author = req.body.author;
+            req.movie.read = req.body.read;
+            req.movie.save(function (err) {
                 if (err) {
                     res.status(500).send(err);
                 } else {
-                    res.json(req.book);
+                    res.json(req.movie);
                 }
             });
         })
@@ -43,19 +43,19 @@ let routes = function (Book) {
             }
 
             for (var p in req.body) {
-                req.book[p] = req.body[p];
+                req.movie[p] = req.body[p];
             }
 
-            req.book.save(function (err) {
+            req.movie.save(function (err) {
                 if (err) {
                     res.status(500).send(err);
                 } else {
-                    res.json(req.book);
+                    res.json(req.movie);
                 }
             });
         })
         .delete(function (req, res) {
-            req.book.remove(function (err) {
+            req.movie.remove(function (err) {
                 if (err) {
                     res.status(500).send(err);
                 } else {
@@ -63,7 +63,7 @@ let routes = function (Book) {
                 }
             })
         });
-    return bookRouter;
+    return movieRouter;
 };
 
 module.exports = routes;
