@@ -1,8 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\models"
+    "\\controllers",
+    "\\models",
+    "\\Routes"
   ],
-  "SelectedNode": "\\models\\bookModel.js",
+  "SelectedNode": "\\app.js",
   "PreviewInSolutionExplorer": false
 }

@@ -1,44 +1,40 @@
-var express = require('express'),
-    mongoose = require('mongoose');
+let express = require('express'),
+    mongoose = require('mongoose'),
+    bodyParser = require('body-parser');
 
-var db = mongoose.connect('mongodb://localhost/bookAPI');
+let db = mongoose.connect('mongodb://localhost/bookAPI');
 
-var Book = require('./models/bookModel');
-var app = express();
+let Book = require('./models/bookModel');
+let app = express();
 
+let port = process.env.PORT || 3000;
 
-var port = process.env.PORT || 3000;
+app.options("/api/books", function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', null);
+    res.header('Allow', 'GET,POST,OPTIONS');
+    res.header('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
+    res.header('Access-Control-Allow-Header', 'Content-Type, Accept, Authorization, Content-Length, X-Request-Width');
+    res.send(200);
+});
 
-var bookRouter = express.Router();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-bookRouter.route('/Books')
-    .get(function (req, res) {
-        var query = req.query;
-        Book.find(query, function (err, books) {
-            if (err) {
-                res.status(500).send(err);
-            } else {
-                res.json(books);
-            }
-        })
-    });
+bookRouter = require('./Routes/bookRoutes')(Book);
 
-bookRouter.route('/Books/:bookID')
-    .get(function (req, res) {
-        Book.findById(req.params.bookID, function (err, book) {
-            if (err) {
-                res.status(500).send(err);
-            } else {
-                res.json(book);
-            }
-        })
-    });
+app.use(function (req, res, next) {
+    if (req.accepts("json")) {
+        next();
+        return;
+    } else {
+        res.sendStatus(404);
+    }
+});
 
-
-app.use('/api', bookRouter);
+app.use('/api/books', bookRouter);
 
 app.get('/', function (req, res) {
-    res.send('Welcome to my API1');
+    res.send('Welcome to my API!');
 });
 
 app.listen(port, function () {
