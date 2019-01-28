@@ -1,10 +1,7 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\controllers",
-    "\\models",
-    "\\Routes"
+    ""
   ],
-  "SelectedNode": "\\Routes\\movieRoutes.js",
+  "SelectedNode": "\\app.js",
   "PreviewInSolutionExplorer": false
 }
