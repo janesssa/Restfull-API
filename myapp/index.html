@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>myapp</title>
+    <script src="vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <table id="content"> 
+      <th> Naam </th>
+      <th> Auteur </th>
+      <th> Genre</th>
+      <th> Details</th> 
+      <th> Edit</th>
+      <th> Delete</th>
+
+      <tr v-for="(item) in items"> 
+          
+          <td> {{ item.title }} </td>
+          <td> {{ item.author }} </td>
+          <td> {{ item.genre }} </td>
+          <td> <button v-on:click="detailItem(item._id)"> details </button></td>
+          <td> <button v-on:click="editItem(item._id, item.title, item.artist, item.genre)"> Edit </button></td>
+          <td> <button v-on:click="deleteItem(item._id)"> Delete </button> </td>
+      </tr> 
+  </table>
+
+    <!-- built files will be auto injected -->
+
+    <script src="connection.js"></script>
+  </body>
+</html>

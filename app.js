@@ -8,6 +8,8 @@ let db = mongoose.connect('mongodb://localhost/movieAPI');
 let Movie = require('./models/movieModel');
 let app = express();
 
+app.use('/static',express.static(__dirname +'/myapp'));
+
 let port = process.env.PORT || 3000;
 
 app.options("/api/movies", function (req, res, next) {
