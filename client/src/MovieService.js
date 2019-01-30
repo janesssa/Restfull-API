@@ -25,13 +25,6 @@ class MovieService {
         return axios.post(url, {title, author, genre})
     }
 
-    //Detail
-    static detailMovie(_id){
-        var id = _id
-        return id
-        
-    }
-
     //Edit
     static editMovie(){
         return 'hoi'

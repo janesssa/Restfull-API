@@ -72,17 +72,13 @@ export default {
       this.items = await MovieService.getMovies();
     },
 
-    async detailMovie(id){
-      await MovieService.detailMovie(id);
-      return id;
-    },
-
     async editMovie (){
       await MovieService.editMovie(1);
     },
 
     async deleteMovie (id){
       await MovieService.createMovie(id);
+      this.items = await MovieService.getMovies();
     }
   }
 }
