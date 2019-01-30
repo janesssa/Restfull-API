@@ -26,8 +26,10 @@ class MovieService {
     }
 
     //Detail
-    static detailMovie(id){
-        return 'detailknop werkt ' + id
+    static detailMovie(_id){
+        var id = _id
+        return id
+        
     }
 
     //Edit
