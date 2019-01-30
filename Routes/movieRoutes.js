@@ -35,15 +35,14 @@ let routes = function (Movie) {
         .options(function (req, res) {
             res.header('Access-Control-Allow-Origin', '*');
             res.header('Access-Control-Allow-Header', 'Content-Type, Authorization, Content-Length, X-Request-Width');
-            res.header('Allow', 'GET, PUT, DELETE, OPTIONS')
-            res.header('Access-Control-Allow-Methods', 'GET, PUT, DELETE, OPTIONS')
+            res.header('Allow', 'GET, PUT, PATCH, DELETE, OPTIONS')
+            res.header('Access-Control-Allow-Methods', 'GET, PUT, PATCH, DELETE, OPTIONS')
             res.sendStatus(200).end();
         })
 
         .get(function (req, res) {
             let returnMovie = req.movie.toJSON()
 
-            // NOG AANPASSEN
             returnMovie._links = {
                 "self": { "href": "http://145.24.222.197:8000/api/movies/" + returnMovie._id },
                 "collection": { "href": "http://145.24.222.197:8000/api/movies" }

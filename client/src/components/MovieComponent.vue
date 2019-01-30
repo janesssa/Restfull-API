@@ -1,5 +1,13 @@
 <template>
 <div class="container">
+<div class="create">
+  <h1 for="create-movie">Create a Movie!</h1>
+  <input type="text" id="create-movie" v-model="title" placeholder="Title">
+  <input type="text" id="create-movie" v-model="author" placeholder="Author">
+  <input type="text" id="create-movie" v-model="genre" placeholder="Genre">
+  <button class="createbtn" v-on:click="createMovie">Save!</button>
+</div>
+<hr>
 <h1> All Movies </h1>
 <hr>
 <p class="error" v-if="error">{{ error }}</p>
@@ -11,34 +19,31 @@
     v-bind:key='item._id'
     >   
     <div v-if='id === item._id' class="detail">
-      <h3> Movie </h3>
-
-      <p> {{ item.title }} </p>
-      <h3> Author</h3>
-      <p> {{ item.author }} </p>
-      <h3> Genre</h3>
-      <p> {{ item.genre }} </p>
-       <button class="itembtn" v-on:click="editMovie(item._id, item.title, item.author, item.genre)"> Edit </button>
-       <button class="itembtn" v-on:click="deleteMovie(item._id)"> Delete </button> 
-       <button class="itembtn" v-on:click="id=''"> Close </button> 
+      <div v-if='edit === true'  class="edit">
+        <input type="text" id="create-movie" v-model="title" placeholder='item.title'>
+        <input type="text" id="create-movie" v-model="author" placeholder='item.author'>
+        <input type="text" id="create-movie" v-model="genre" placeholder='item.genre'>
+        <button class="itembtn" v-on:click="editMovie(item._id, title, author, genre)">Save!</button>
+        <button class="itembtn" v-on:click="edit=false"> Close </button> 
+      </div>
+      <div v-if='edit === false'>
+        <h3> {{ item.title }} </h3>
+        <h4> Author</h4>
+        <p> {{ item.author }} </p>
+        <h4> Genre</h4>
+        <p> {{ item.genre }} </p>
+        <button class="itembtn" v-on:click="edit=true"> Edit </button>
+        <button class="itembtn" v-on:click="deleteMovie(item._id)"> Delete </button> 
+        <button class="itembtn" v-on:click="id=''"> Close </button> 
+      </div>
     </div>
     <div v-else class="tile">
-      <h3> Movie </h3>
-
-      <p> {{ item.title }} </p>
-      <p> <button class="itembtn" v-on:click="id=item._id"> Details </button> </p>
+      <h1> {{ item.title }} </h1>
+      <p> <button class="tilebtn" v-on:click="id=item._id"> Details </button> </p>
     </div>
   </div>  
 </div>
-<hr>
-<div class="create">
-  <h1 for="create-movie">Create a Movie!</h1>
-  <input type="text" id="create-movie" v-model="title" placeholder="Title">
-  <input type="text" id="create-movie" v-model="author" placeholder="Author">
-  <input type="text" id="create-movie" v-model="genre" placeholder="Genre">
-  <button class="createbtn" v-on:click="createMovie">Save!</button>
 </div>
-  </div>
 </template>
 
 <script>
@@ -54,7 +59,7 @@ export default {
       author: '',
       genre: '',
       id: '',
-      hidden: true
+      edit: false
     }
   },
   async created(){
@@ -70,14 +75,15 @@ export default {
       this.items = await MovieService.getMovies();
     },
 
-    async editMovie (title, author, genre){
-      await MovieService.editMovie(1);
+    async editMovie (id, title, author, genre){
+      await MovieService.editMovie(id, title, author, genre);
+      this.items = await MovieService.getMovies();
     },
 
     async deleteMovie (id){
-      await MovieService.createMovie(id);
+      await MovieService.deleteMovie(id);
       this.items = await MovieService.getMovies();
-    }
+    },
   }
 }
 </script>
@@ -118,10 +124,17 @@ input{
   box-sizing: border-box;
   text-align: center;
 }
+.tilebtn{
+  min-width: 40%;
+  padding: 2% 4%;
+  display: inline-block;
+  font-size: 18px;
+}
 .createbtn{
   min-width: 10%;
   padding: 1% 2%;
   display: inline-block;
+  font-size: 14px;
 }
 button{
   background-color: black;
@@ -130,7 +143,6 @@ button{
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 12px;
   margin: 4px 2px;
   cursor: pointer;
   border-radius: 5px;
@@ -140,7 +152,8 @@ button{
   flex-wrap: wrap;
   justify-content: space-evenly;
 }
-.detail {
+.edit {
+  padding: 7% 5%;
 }
 
 </style>
