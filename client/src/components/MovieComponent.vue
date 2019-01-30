@@ -4,34 +4,32 @@
 <hr>
 <p class="error" v-if="error">{{ error }}</p>
 <div class="itemContainer">
-      <div
-        class='card'
-        v-for="item in items"
-        v-bind:item='item'
-        v-bind:key='item._id'
-        >         
-          <h3> Movie </h3>
+  <div
+    class='card'
+    v-for="item in items"
+    v-bind:item='item'
+    v-bind:key='item._id'
+    >   
+    <div v-if='id === item._id' class="detail">
+      <h3> Movie </h3>
 
-          <p> {{ item.title }} </p>
-          <p> <button class="itembtn" v-on:click="id=item._id"> Details </button> </p>
-          <p> <button class="itembtn" v-on:click="editMovie(item._id, item.title, item.author, item.genre)"> Edit </button></p>
-          <p> <button class="itembtn" v-on:click="deleteMovie(item._id)"> Delete </button> </p>
+      <p> {{ item.title }} </p>
+      <h3> Author</h3>
+      <p> {{ item.author }} </p>
+      <h3> Genre</h3>
+      <p> {{ item.genre }} </p>
+       <button class="itembtn" v-on:click="editMovie(item._id, item.title, item.author, item.genre)"> Edit </button>
+       <button class="itembtn" v-on:click="deleteMovie(item._id)"> Delete </button> 
+       <button class="itembtn" v-on:click="id=''"> Close </button> 
+    </div>
+    <div v-else class="tile">
+      <h3> Movie </h3>
 
-          <div v-if='id === item._id' class="detail">
-            {{hidden}}
-            {{id}}
-            <h1> Author</h1>
-            <p> {{ item.author }} </p>
-            <h1> Genre</h1>
-            <p> {{ item.genre }} </p>
-            <p> <button class="itembtn" v-on:click="id=''"> Close </button> </p>
-          </div>
-          <div v-else>          
-            {{hidden}}
-            {{id}}
-          </div>
-      </div>  
-      </div>
+      <p> {{ item.title }} </p>
+      <p> <button class="itembtn" v-on:click="id=item._id"> Details </button> </p>
+    </div>
+  </div>  
+</div>
 <hr>
 <div class="create">
   <h1 for="create-movie">Create a Movie!</h1>
@@ -72,7 +70,7 @@ export default {
       this.items = await MovieService.getMovies();
     },
 
-    async editMovie (){
+    async editMovie (title, author, genre){
       await MovieService.editMovie(1);
     },
 
@@ -86,13 +84,20 @@ export default {
 <style scope>
 .container{
 }
+.tile{
+  padding: 10%;
+  font-size: 26px;
+}
 .card{
   background-color: lightgray;
-  padding: 5%;
-  margin: 2%;
+  margin: 1%;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   transition: 0.3s;
-  width: 10%;
+  width: 25vw;
+  height: 15vw;
+}
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 .create{  
   display: flex;
@@ -100,7 +105,7 @@ export default {
   justify-content: center;
 }
 .itembtn{
-  min-width: 50%;
+  min-width: 20%;
   padding: 3% 4%;
 }
 input{
@@ -125,7 +130,7 @@ button{
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 16px;
+  font-size: 12px;
   margin: 4px 2px;
   cursor: pointer;
   border-radius: 5px;
@@ -134,6 +139,8 @@ button{
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
+}
+.detail {
 }
 
 </style>
