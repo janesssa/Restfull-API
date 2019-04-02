@@ -7,7 +7,7 @@ let db = mongoose.connect("mongodb://localhost/movieAPI");
 let Movie = require("./models/movieModel");
 let app = express();
 
-let port = 8000;
+let port = 41502;
 
 app.options(function(req, res, next) {
   res.header("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
@@ -31,9 +31,26 @@ app.use(function(req, res, next) {
   }
 });
 
-movieRouter = require("./Routes/movieRoutes")(Movie);
+movieRouter = require("./Routes/movieRoutes")(Movie, app);
 
 app.use("/api/movies", movieRouter);
+
+app.post('/api/movies', function (req, res) {
+                console.log('ja!!');
+                res.sendStatus(201)
+                return 
+                let movies = new Movie(req.body);
+                movies._link.self.href = 'http://' + req.headers.host + '/api/movies/' + movie._id;
+                movies._link.collection.href = 'http://' + req.headers.host + '/api/movies/';
+        
+                console.log(req.body);
+        
+                if (!req.body.title || !req.body.author || !req.body.genre) {
+                    return res.status(404).send('Geen lege velden !')
+                }
+        
+                movie.save();
+            })
 
 app.get("/", function(req, res) {
   res.send("Welcome to my API!");

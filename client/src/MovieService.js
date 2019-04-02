@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = "http://145.24.222.197:8000/api/movies/";
+const url = "http://51.68.188.157:8000/api/";
 
 class MovieService {
   //Get
@@ -22,21 +22,22 @@ class MovieService {
   }
 
   //Create
-  static createMovie(title, author, genre) {
-    return axios.post(url, { title, author, genre });
+  static createMovie(title, studio, genre) {
+    return axios.post(url, { title, studio, genre });
   }
 
   //Edit
-  static editMovie(id, title, author, genre) {
+  static editMovie(id, title, studio, genre) {
     let uri = url + id;
 
     let editItem = {
+      id: id,
       title: title,
-      author: author,
+      studio: studio,
       genre: genre
     };
 
-    axios.patch(uri, editItem);   
+    axios.put(uri, editItem);   
     window.location.reload()
   }
 

@@ -1,25 +1,13 @@
 var movieController = function (Movie) {
-    var post = function (req, res) {
-        let movies = new Movie(req.body);
-        movies._link.self.href = 'http://' + req.headers.host + '/api/movies/' + movie._id;
-        movies._link.collection.href = 'http://' + req.headers.host + '/api/movies/';
-
-        console.log(req.body);
-        console.log(movie);
-
-        if (!req.body.title || !req.body.author || !req.body.genre) {
-            return res.status(404).send('Geen lege velden !')
-        }
-
-        movie.save();
-        res.status(201).send(movie);
-    }
+    let post = true
 
     let get = function (req, res) {
         const perPage = 10
         const page = req.params.start || 1
         const start = parseInt(req.query.start)
         const limit = parseInt(req.query.limit)
+
+        console.log('get')
 
         Movie.find({})
 

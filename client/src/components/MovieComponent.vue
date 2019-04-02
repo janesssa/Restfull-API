@@ -3,7 +3,7 @@
 <div class="create">
   <h1 for="create-movie">Create a Movie!</h1>
   <input type="text" id="create-movie" v-model="title" placeholder="Title">
-  <input type="text" id="create-movie" v-model="author" placeholder="Author">
+  <input type="text" id="create-movie" v-model="studio" placeholder="studio">
   <input type="text" id="create-movie" v-model="genre" placeholder="Genre">
   <button class="createbtn" v-on:click="createMovie">Save!</button>
 </div>
@@ -20,16 +20,16 @@
     >   
     <div v-if='id === item._id' class="detail">
       <div v-if='edit === true'  class="edit">
-        <input type="text" id="create-movie" v-model="title" placeholder='item.title'>
-        <input type="text" id="create-movie" v-model="author" placeholder='item.author'>
-        <input type="text" id="create-movie" v-model="genre" placeholder='item.genre'>
-        <button class="itembtn" v-on:click="editMovie(item._id, title, author, genre)">Save!</button>
+        <input type="text" id="create-movie" v-model="title" placeholder='title'>
+        <input type="text" id="create-movie" v-model="studio" placeholder='studio'>
+        <input type="text" id="create-movie" v-model="genre" placeholder='genre'>
+        <button class="itembtn" v-on:click="editMovie(item._id, title, studio, genre)">Save!</button>
         <button class="itembtn" v-on:click="edit=false"> Close </button> 
       </div>
       <div v-if='edit === false'>
         <h3> {{ item.title }} </h3>
-        <h4> Author</h4>
-        <p> {{ item.author }} </p>
+        <h4> studio</h4>
+        <p> {{ item.studio }} </p>
         <h4> Genre</h4>
         <p> {{ item.genre }} </p>
         <button class="itembtn" v-on:click="edit=true"> Edit </button>
@@ -56,7 +56,7 @@ export default {
       items: [],
       error: '',
       title: '',
-      author: '',
+      studio: '',
       genre: '',
       id: '',
       edit: false
@@ -71,12 +71,12 @@ export default {
   },
   methods: {
     async createMovie(){
-      await MovieService.createMovie(this.title, this.author, this.genre);
+      await MovieService.createMovie(this.title, this.studio, this.genre);
       this.items = await MovieService.getMovies();
     },
 
-    async editMovie (id, title, author, genre){
-      await MovieService.editMovie(id, title, author, genre);
+    async editMovie (id, title, studio, genre){
+      await MovieService.editMovie(id, title, studio, genre);
       this.items = await MovieService.getMovies();
     },
 

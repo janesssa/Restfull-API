@@ -1,6 +1,6 @@
 let express = require('express');
 
-let routes = function (Movie) {
+let routes = function (Movie, app) {
     let movieRouter = express.Router();
 
     var movieController = require('../controllers/movieController')(Movie);
@@ -14,8 +14,7 @@ let routes = function (Movie) {
         res.sendStatus(200);
     })
 
-        movieRouter.route('/')
-            .post(movieController.post)
+        app.route('/api/movies')
             .get(movieController.get);
 
         movieRouter.use('/:movieID', function (req, res, next) {
@@ -44,8 +43,8 @@ let routes = function (Movie) {
             let returnMovie = req.movie.toJSON()
 
             returnMovie._links = {
-                "self": { "href": "http://145.24.222.197:8000/api/movies/" + returnMovie._id },
-                "collection": { "href": "http://145.24.222.197:8000/api/movies" }
+                "self": { "href": "http://localhost:8000/api/movies/" + returnMovie._id },
+                "collection": { "href": "http://localhost:8000/api/movies" }
             }
 
             res.json(returnMovie);
